@@ -1,8 +1,8 @@
-import Image1 from '../../../../public/assets/images/hero/hero1.png';
-import Image2 from '../../../../public/assets/images/hero/hero3.png';
-import Image3 from '../../../../public/assets/images/hero/hero2.png';
-import Image4 from '../../../../public/assets/images/hero/hero4.png';
-import Image5 from '../../../../public/assets/images/hero/hero5.png';
+import Image1 from '../../../public/assets/images/hero/hero1.png';
+import Image2 from '../../../public/assets/images/hero/hero3.png';
+import Image3 from '../../../public/assets/images/hero/hero2.png';
+import Image4 from '../../../public/assets/images/hero/hero4.png';
+import Image5 from '../../../public/assets/images/hero/hero5.png';
 
 export const sliderData = [
   {
