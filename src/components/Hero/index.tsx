@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { IoArrowForward, IoArrowBack } from 'react-icons/io5';
-import { sliderData } from './slideShow/sliderData';
+import { sliderData } from './SlideShow/sliderData';
 
 export const Hero = () => {
   const slideshow = useRef(null);
