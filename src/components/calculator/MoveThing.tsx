@@ -26,6 +26,11 @@ const articles = [
     image: '/assets/images/calculator/bed-queen.png',
   },
   {
+    title: 'Cuna',
+    volume: 200,
+    image: '/assets/images/calculator/crib.png',
+  },
+  {
     title: 'Gabinete Pequeño',
     volume: 200,
     image: '/assets/images/calculator/bureau.png',
@@ -56,14 +61,19 @@ const articles = [
     image: '/assets/images/calculator/secadora.png',
   },
   {
+    title: 'Lavavajilla',
+    volume: 200,
+    image: '/assets/images/calculator/dishwasher.png',
+  },
+  {
     title: 'Cocina',
     volume: 200,
     image: '/assets/images/calculator/cooker.png',
   },
   {
-    title: 'Lavavajilla',
-    volume: 200,
-    image: '/assets/images/calculator/dishwasher.png',
+    title: 'Horno de Mesa',
+    volume: 150,
+    image: '/assets/images/calculator/toaster-oven.png',
   },
   {
     title: 'Parillera',
@@ -93,7 +103,7 @@ const articles = [
   {
     title: 'Sofa 2 puestos',
     volume: 200,
-    image: '/assets/images/calculator/sofa.png',
+    image: '/assets/images/calculator/living-room.png',
   },
   {
     title: 'Sofa 3 puestos',
@@ -126,9 +136,24 @@ const articles = [
     image: '/assets/images/calculator/hdtv.png',
   },
   {
-    title: 'Caja 45 X 45 x 45',
+    title: 'Radio',
     volume: 100,
-    image: '/assets/images/calculator/box.png',
+    image: '/assets/images/calculator/radio.png',
+  },
+  {
+    title: 'Caja 40 X 40',
+    volume: 100,
+    image: '/assets/images/calculator/box-small.png',
+  },
+  {
+    title: 'Caja 70 X 70',
+    volume: 150,
+    image: '/assets/images/calculator/box-middle.png',
+  },
+  {
+    title: 'Caja 100 X 100',
+    volume: 150,
+    image: '/assets/images/calculator/box-big.png',
   },
 ];
 
@@ -146,7 +171,7 @@ export const MoveThing = (props: Props) => {
       return 'Camión Grande';
     }
 
-    return 'Camión Pequeño';
+    return 'Vehículo Pequeño';
   };
   return (
     <section className="px-4 py-8">
