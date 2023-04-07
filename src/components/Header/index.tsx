@@ -16,7 +16,7 @@ import {
 
 const links = [
   { label: 'Inicio', route: '/' },
-  { label: 'Vehículos', route: '/' },
+  { label: 'Vehículos', route: '/booking' },
   { label: 'Servicios', route: '/services' },
   { label: 'Nosotros', route: '/about' },
   { label: 'Contacto', route: '/contact' },

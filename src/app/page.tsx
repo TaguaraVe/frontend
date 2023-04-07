@@ -9,7 +9,7 @@ export default function Home() {
       <section>
         <Hero />
         <div className="gradient relative z-0">
-          <div className="bg-global-pattern bg-cover  bg-no-repeat w-full h-full absolute top-0 left-0 -z-10"></div>
+          <div className="bg-global-pattern bg-cover bg-no-repeat bg-center w-full h-full absolute top-0 left-0 -z-10"></div>
           <TypesVehicle />
           <Requirement />
           {/* <Faq /> */}
