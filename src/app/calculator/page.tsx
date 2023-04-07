@@ -3,7 +3,7 @@ import { MoveThing } from '@/components/calculator/MoveThing';
 
 const Calculator = () => {
   return (
-    <section>
+    <section className="min-h-[calc(100vh-287px)]">
       {/* Elemento a mover */}
       <MoveThing />
       {/* <MoveElements /> */}

@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --header-height: 98px;
+    --footer-height: 189px;
   }
   html {
     @apply scroll-smooth;
