@@ -38,7 +38,7 @@ const Register2 = () => {
   //   };
 
   return (
-    <div className="w-full bg-global-pattern bg-no-repeat bg-cover bg-center ">
+    <div className="w-full bg-mobile-pattern md:bg-global-pattern bg-no-repeat bg-cover bg-center ">
       <form className="px-48 py-24">
         <div>
           <h2 className="text-4xl pb-4">Ya casi terminamos...</h2>
