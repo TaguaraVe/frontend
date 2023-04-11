@@ -42,7 +42,7 @@ export const SelectedArticles = (props: Props) => {
           {selectedItems.map((item) => {
             return (
               <div key={item.title} className="flex items-center space-x-2 ">
-                <MoveToTruck thing={item} />
+                <MoveToTruck thing={item} selected={true} />
                 <Image
                   src={item.image}
                   alt={item.title}

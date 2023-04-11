@@ -7,8 +7,18 @@ import {
   selectTruckItemsById,
   setDecreaseItemFromTruck,
 } from '../../../features/truck/truckSlice';
+import { type } from 'os';
 
-export const MoveToTruck = ({ thing }) => {
+type MoveToTruckProps = {
+  thing: {
+    title: string;
+    image: string;
+    qty: string;
+  };
+  selected: boolean;
+};
+
+export const MoveToTruck = ({ thing, selected }: MoveToTruckProps) => {
   const dispatch = useDispatch();
 
   const selectedItem = useSelector((state) =>
@@ -51,7 +61,7 @@ export const MoveToTruck = ({ thing }) => {
           onAddToCart();
         }}
       ></div>
-      <div className="hidden md:flex items-center gap-3">
+      <div className={`${selected ? 'flex' : 'hidden'}  items-center gap-3`}>
         <button
           type="button"
           disabled={processing | (selectedItem.length === 0)}
