@@ -17,11 +17,6 @@ import {
   selectCurrentUser,
 } from '@/features/users/userSlice';
 
-/**
- * show = 1 se muestra en el menu (tablet y desktop)
- * show = 2 se muestra en el menu (tablet)
- */
-
 const links = [
   {
     label: 'Inicio',
@@ -34,7 +29,7 @@ const links = [
     label: 'Vehículos',
     icon: '/assets/images/cars.svg',
     size: 24,
-    route: '/booking',
+    route: '/vehicles',
     show: '1',
   },
   {
@@ -93,7 +88,7 @@ export const Header = () => {
     dispatch(openModalLogin());
   };
   const handleRegister = () => {
-    router.push('/register');
+    router.push('/newregister');
   };
   const handleOpenModalProfile = () => {
     setShowModalPerfil(true);
@@ -143,7 +138,7 @@ export const Header = () => {
             ) : (
               <div className="flex space-x-2 ">
                 <button
-                  className="hidden md:block btn btnSecond"
+                  className="hidden md:block btn btnSecond px-2"
                   onClick={() => handleLogin()}
                 >
                   Ingresar
@@ -152,7 +147,7 @@ export const Header = () => {
                   <FaUserAlt size={16} />
                 </button>
                 <button
-                  className="hidden md:block btn"
+                  className="hidden md:block btn px-2"
                   onClick={() => handleRegister()}
                 >
                   Registrarse

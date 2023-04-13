@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Schema as schema } from './registerValidation';
+import { useState } from 'react';
 import postRegister from '@/lib/postRegister';
 
 type FormValues = {
@@ -13,7 +14,7 @@ type FormValues = {
   confirmPassword: string;
 };
 
-const Register = () => {
+const Register1 = ({ pasos, actualizarDatos }) => {
   const router = useRouter();
 
   const {
@@ -34,11 +35,11 @@ const Register = () => {
       email: values.email,
       password: values.password,
     };
-    // crear el usuario
-    // validar la respuesta
-    // actualizar datos en el localstorage y estado global
-    // si el usuario esta creado y no esta actalizado se debe de enviar a completar los datos del mismo
-    router.push('/updateuser');
+    actualizarDatos(data);
+    console.log('guardar datatos parcial');
+    pasos(1);
+    console.log(values);
+    console.log(data);
   };
 
   const onSubmit = (values: FormValues) => {
@@ -46,7 +47,7 @@ const Register = () => {
   };
 
   return (
-    <section className="flex justify-center px-2 md:px-4 py-2 md:py-4 lg:px-10 lg:py-10 bg-mobile-pattern md:bg-global-pattern bg-no-repeat bg-cover bg-center ">
+    <div className="register flex justify-center px-2 md:px-4 py-2 md:py-4 lg:px-10 lg:py-10 bg-mobile-pattern md:bg-global-pattern bg-no-repeat bg-cover bg-center ">
       <div className="flex justify-center rounded-[10px] md:rounded-[20px] bg-white bg-opacity-70 max-w-7xl">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <div className="flex flex-col">
@@ -69,7 +70,7 @@ const Register = () => {
                     Email
                   </label>
                   <input
-                    className={`rounded-md h-11 border-2 border-transparent bg-white outline-none px-2 py-4 ${
+                    className={`rounded-md h-11 border-2 border-ttansparent bg-white outline-none px-2 py-4 ${
                       errors.email ? 'outline-0  border-red-500' : ''
                     }`}
                     {...register('email')}
@@ -84,7 +85,7 @@ const Register = () => {
                     Contraseña
                   </label>
                   <input
-                    className={`rounded-md h-11 border-2 border-transparent bg-white outline-none px-2 py-4 ${
+                    className={`rounded-md h-11 border-2 border-ttansparent bg-white outline-none px-2 py-4 ${
                       errors.password ? 'outline-0  border-red-500' : ''
                     }`}
                     {...register('password')}
@@ -101,7 +102,7 @@ const Register = () => {
                     Repetir Contraseña
                   </label>
                   <input
-                    className={`rounded-md h-11 border-2 border-transparent bg-white outline-none px-2 py-4 ${
+                    className={`rounded-md h-11 border-2 border-ttansparent bg-white outline-none px-2 py-4 ${
                       errors.confirmPassword ? 'outline-0  border-red-500' : ''
                     }`}
                     {...register('confirmPassword')}
@@ -116,8 +117,7 @@ const Register = () => {
           <div className="p-16 md:px-8 flex justify-center md:justify-between  items-center mb-8">
             <button
               className="hidden md:block py-4 px-7 w-40 bg-white text-base text-primary-600 rounded-md"
-              // onClick={() => router.back()}
-              onClick={() => router.push('/')}
+              onClick={() => alert('ir al inicio')}
             >
               Volver al inicio
             </button>
@@ -130,7 +130,7 @@ const Register = () => {
           </div>
         </form>
       </div>
-    </section>
+    </div>
   );
 };
-export default Register;
+export default Register1;
