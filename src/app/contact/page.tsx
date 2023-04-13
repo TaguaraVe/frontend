@@ -9,7 +9,7 @@ import emailjs from '@emailjs/browser';
 import { useState } from 'react';
 
 type FormValues = {
-  name: string;
+  user_name: string;
   phone: string;
   email: string;
   message: string;
@@ -25,7 +25,7 @@ export default function Contact() {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      name: '',
+      user_name: '',
       phone: '',
       email: '',
       message: '',
@@ -34,27 +34,27 @@ export default function Contact() {
   });
 
   const onSubmit = (values: FormValues) => {
-    alert('revisar parametros y variables de entorno');
-    reset();
-    // setIsSending(true);
-    // emailjs
-    //   .send(
-    //     process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID,
-    //     process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID,
-    //     values,
-    //     process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
-    //   )
-    //   .then(
-    //     (response) => {
-    //       console.log('SUCCESS!', response.status, response.text);
-    //       setIsSending(false);
-    //       reset();
-    //     },
-    //     (err) => {
-    //       console.log('FAILED...', err);
-    //       setIsSending(false);
-    //     }
-    //   );
+    // alert('revisar parametros y variables de entorno');
+    setIsSending(true);
+    emailjs
+      .send(
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID,
+        values,
+        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          setIsSending(false);
+          alert('Gracias por su Email');
+          reset();
+        },
+        (err) => {
+          console.log('FAILED...', err);
+          setIsSending(false);
+        }
+      );
   };
 
   return (
@@ -72,20 +72,20 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
               <div className="relative py-0  mx-auto mb-4 flex flex-col">
-                <label htmlFor="name" className=" mr-2">
+                <label htmlFor="user_name" className=" mr-2">
                   Nombre y Apellido
                 </label>
                 <input
-                  {...register('name')}
+                  {...register('user_name')}
                   placeholder="Nombre  y Apellidos"
                   className={`px-2 py-1 rounded-lg border-2 border-transparent outline-0 focus:border-2 focus:border-primary-500 ${
-                    errors.name
+                    errors.user_name
                       ? 'outline-2 outline-red-500 border-2 border-red-500'
                       : ''
                   } `}
                 />
                 <p className="text-red-600 text-xs font-bold">
-                  {errors?.name?.message}
+                  {errors?.user_name?.message}
                 </p>
               </div>
               <div className="relative py-0  mx-auto mb-4 flex flex-col">
