@@ -5,10 +5,9 @@
  
  */
 
-const postCarsAvailable = async ({ id, start, end }) => {
+const postCarsAvailable = async ({ id, start, end, token }) => {
   const URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpYUBjb3JyZW8uY29tIiwiaWF0IjoxNjgxMzcyNTI4LCJleHAiOjE2ODEzNzYxMjh9.n2Ev-KuKG97hnzeJaS48l1tgUxvj8ubGfmyaadfB9YU';
+
   try {
     console.log(id, start, end);
     const response = await fetch(

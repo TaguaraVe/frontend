@@ -10,12 +10,7 @@ import Cookies from 'js-cookie';
 import logo from '../../../public/assets/images/logos/logo.png';
 import logoMobile from '../../../public/assets/images/logos/logo-mobile.png';
 import logoTablet from '../../../public/assets/images/logos/logo-tablet.png';
-import { ModalLogin } from '../login/ModalLogin';
-import {
-  openModalLogin,
-  removeUser,
-  selectCurrentUser,
-} from '@/features/users/userSlice';
+import { removeUser, selectCurrentUser } from '@/features/users/userSlice';
 
 const links = [
   {
@@ -67,8 +62,6 @@ export const Header = () => {
   const [showModalPerfil, setShowModalPerfil] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
 
-  console.log(currentUser);
-
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -83,12 +76,11 @@ export const Header = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('category');
     setShowModalPerfil(false);
-    console.log('pulso logout');
     router.push('/');
   };
 
   const handleLogin = () => {
-    dispatch(openModalLogin());
+    router.push('/login');
   };
 
   const handleRegister = () => {
@@ -132,13 +124,13 @@ export const Header = () => {
 
         <nav className="flex lg:flex-row-reverse justify-between items-center">
           <div>
-            {currentUser.firstName || currentUser.lastName ? (
+            {currentUser.fullName ? (
               <div className="flex space-x-2 ">
                 <button
                   className="w-8 h-8 md:w-[40px] md:h-[40px] lg:w-[60px] lg:h-[60px]  md:ml-12 bg-primary-200 hover:bg-primary-300 rounded-full flex justify-center items-center text-base md:text-xl"
                   onClick={() => handleOpenModalProfile()}
                 >
-                  {`${currentUser.firstName.toUpperCase()}${currentUser.lastName.toUpperCase()}`}
+                  {currentUser.fullName[0].toUpperCase()}
                 </button>
               </div>
             ) : (
@@ -195,9 +187,8 @@ export const Header = () => {
           </ul>
         </nav>
       </header>
-      {currentUser.firstName === '' && <ModalLogin />}
       {showModalPerfil && (
-        <div className="absolute bg-primary-700 w-36 h-20  top-[var(--header-heigth)] right-10 z-50 p-4 text-white flex flex-col">
+        <div className="absolute bg-primary-700 w-36 h-20  top-[var(--header-heigth)] right-10 z-40 p-4 text-white flex flex-col">
           <button
             className="text-left font-semibold cursor-pointer"
             onClick={handleProfile}

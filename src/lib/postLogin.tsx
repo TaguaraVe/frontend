@@ -12,7 +12,7 @@ const postLogin = async ({ email, password }: LoginProps) => {
       },
       body: JSON.stringify({ email, password }),
     });
-    console.log('respuesta', response.status);
+
     if (!response.ok) {
       return { status: response.status, msg: 'credential not valid' };
     }
