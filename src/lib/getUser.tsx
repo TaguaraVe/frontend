@@ -1,6 +1,7 @@
 const getUser = async (token: string) => {
+  const URL = process.env.NEXT_PUBLIC_BASE_URL;
   console.log('en getUser');
-  const response = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
+  const response = await fetch(`${URL}customers/profile`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

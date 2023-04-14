@@ -25,8 +25,6 @@ type FormValues = {
   email: string;
 };
 
-
-
 export const ModalLogin = () => {
   const showModal = useSelector(selectShowModalLogin);
   const showModalLoginError = useSelector(selectShowModalLoginError);
@@ -65,6 +63,8 @@ export const ModalLogin = () => {
     const getUserData = getUser(result.token);
     const userData = await getUserData;
 
+    console.log('userData');
+
     dispatch(setUser(userData));
     Cookies.set('token', result.token);
     localStorage.setItem('token', JSON.stringify(result));
@@ -74,13 +74,10 @@ export const ModalLogin = () => {
   };
 
   const onSubmit = (credentials: FormValues) => {
-   
     LoginUser(credentials);
     if (pathname.includes('booking')) {
       router.push(`/pay`);
-      
     }
-    
   };
 
   return (

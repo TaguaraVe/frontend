@@ -66,6 +66,9 @@ export const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showModalPerfil, setShowModalPerfil] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
+
+  console.log(currentUser);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -87,12 +90,15 @@ export const Header = () => {
   const handleLogin = () => {
     dispatch(openModalLogin());
   };
+
   const handleRegister = () => {
     router.push('/newregister');
   };
+
   const handleOpenModalProfile = () => {
     setShowModalPerfil(true);
   };
+
   const handleProfile = () => {
     setShowModalPerfil(false);
     router.push('/profile');
@@ -126,13 +132,13 @@ export const Header = () => {
 
         <nav className="flex lg:flex-row-reverse justify-between items-center">
           <div>
-            {currentUser.firstName !== '' ? (
+            {currentUser.firstName || currentUser.lastName ? (
               <div className="flex space-x-2 ">
                 <button
                   className="w-8 h-8 md:w-[40px] md:h-[40px] lg:w-[60px] lg:h-[60px]  md:ml-12 bg-primary-200 hover:bg-primary-300 rounded-full flex justify-center items-center text-base md:text-xl"
                   onClick={() => handleOpenModalProfile()}
                 >
-                  {`${currentUser.firstName[0].toUpperCase()}${currentUser.lastName[0].toUpperCase()}`}
+                  {`${currentUser.firstName.toUpperCase()}${currentUser.lastName.toUpperCase()}`}
                 </button>
               </div>
             ) : (
