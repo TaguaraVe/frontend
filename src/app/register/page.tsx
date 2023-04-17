@@ -41,6 +41,8 @@ const Register = () => {
 
     if (validEmail) {
       alert('el correo ya esta en uso');
+      console.log('el correo ya esta en uso', validEmail);
+
       return;
     } else {
       const data = {
@@ -54,7 +56,7 @@ const Register = () => {
         password: values.password,
       };
       dispatch(setUser(newUser));
-      router.push('/updateuser');
+      // router.push('/updateuser');
     }
   };
 
