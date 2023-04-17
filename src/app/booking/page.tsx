@@ -21,12 +21,12 @@ export default function Booking() {
 
   registerLocale('es', es);
 
-  // let item =
-  //   typeof window !== 'undefined' && localStorage.getItem('category')
-  //     ? JSON.parse(localStorage.getItem('category')).firstName
-  //     : '';
-  let item = JSON.parse(localStorage.getItem("category"));
- 
+  let item =
+    typeof window !== 'undefined' && localStorage.getItem('category')
+      ? JSON.parse(localStorage.getItem('category')).firstName
+      : '';
+  // let item = JSON.parse(localStorage.getItem("category"));
+
   const onSearch = async () => {
     let category;
     console.log(item);
