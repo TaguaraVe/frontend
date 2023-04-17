@@ -8,10 +8,7 @@ const getLocations = async () => {
   });
 
   if (!response.ok) {
-    return {
-      status: response.status,
-      msg: 'error...',
-    };
+    return { status: response.status, msg: 'error' };
   }
   return await response.json();
 };

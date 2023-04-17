@@ -41,23 +41,23 @@ const Register = () => {
 
     if (validEmail) {
       alert('el correo ya esta en uso');
-      console.log('el correo ya esta en uso', validEmail);
-
       return;
-    } else {
-      const data = {
-        email: values.email,
-        password: values.password,
-      };
-
-      const newUser: User = {
-        ...currentUser,
-        email: values.email,
-        password: values.password,
-      };
-      dispatch(setUser(newUser));
-      // router.push('/updateuser');
     }
+
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
+
+    // se crea el estado usuario en Creación y se pasa al siguiente paso
+    // actualizar datos en el localstorage y estado global
+    const newUser: User = {
+      ...currentUser,
+      email: values.email,
+      password: values.password,
+    };
+    dispatch(setUser(newUser));
+    router.push('/updateuser');
   };
 
   const onSubmit = (values: FormValues) => {
