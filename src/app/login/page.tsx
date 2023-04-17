@@ -1,11 +1,11 @@
 'use client';
 import { useDispatch, useSelector } from 'react-redux';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaTimes } from 'react-icons/fa';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Schema as schema } from './loginValidation';
-import { usePathname, useRouter } from 'next/navigation';
 
 import Cookies from 'js-cookie';
 
@@ -62,19 +62,26 @@ const Login = () => {
     localStorage.setItem('token', JSON.stringify(result));
     Cookies.set('token', result.token);
 
-    if (userData.fullName) {
-      router.push('/updateuser');
-    } else {
-      dispatch(setUser(userData));
-      // Cookies.set('user', JSON.stringify(userData));
-      localStorage.setItem('user', JSON.stringify(userData));
-      reset();
-      closeModal();
-    }
+    console.log(userData);
+
+    // if (userData.fullName) {
+    //   router.push('/updateuser');
+    // } else {
+    dispatch(setUser(userData));
+    // Cookies.set('user', JSON.stringify(userData));
+    localStorage.setItem('user', JSON.stringify(userData));
+    reset();
+    closeModal();
+    // }
   };
 
   const onSubmit = (credentials: FormValues) => {
     LoginUser(credentials);
+    // if (pathname.includes('booking')) {
+    //   router.push(`/pay`);
+
+    // }
+    ['small', 'medium', 'large'].includes(pathname) && router.push(`/pay`);
   };
 
   return (

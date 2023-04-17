@@ -1,22 +1,12 @@
-/**
- * 
- *    const response = await fetch(
-      `https://backend-nocountry.onrender.com/api/v1/cars/getbyfilters?id_category=${id}&pickUpLocation=Catan&startTime=${start}&endTime=${end}`,
- 
- */
-
-const postCarsAvailable = async ({ id, start, end, token }) => {
-  const URL = process.env.NEXT_PUBLIC_BASE_URL;
-
+const postCarsAvailable = async ({ id, start, end, startPlace }) => {
   try {
-    console.log(id, start, end);
+    console.log(id, start, end, startPlace);
     const response = await fetch(
-      `${URL}cars/getbyfilters?id_category=${id}&pickUpLocation=Catan&startTime=${start}&endTime=${end}`,
+      `https://s7-12-m-javareact-production.up.railway.app/api/v1/cars/getbyfilters?idCategory=${id}&startTime=${start}&endTime=${end}&idLocation=${startPlace}`,
       {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
       }
     );
