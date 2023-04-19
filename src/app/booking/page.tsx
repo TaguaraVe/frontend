@@ -1,58 +1,101 @@
-'use client';
-import React, { forwardRef, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import { registerLocale } from 'react-datepicker';
-import es from 'date-fns/locale/es';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useRouter } from 'next/navigation';
-import postCarsAvailable from '../../lib/postCarsAvailable';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+"use client";
+import React, { forwardRef, useState } from "react";
+import DatePicker from "react-datepicker";
+import { registerLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/navigation";
+import postCarsAvailable from "../../lib/postCarsAvailable";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function Booking() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [startTime, setstartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
+  const [samePlace, setSamePlace] = useState(false);
   // const [category, setCategory] = useState(0);
-  const [startPl, setStartPl] = useState('02000010');
-  const [returnPl, setReturnPl] = useState('02000010');
+  const [startPl, setStartPl] = useState("02000010");
+  const [returnPl, setReturnPl] = useState("02000010");
 
   const router = useRouter();
 
-  registerLocale('es', es);
+  registerLocale("es", es);
 
   let item =
-    typeof window !== 'undefined' && localStorage.getItem('category')
-      ? JSON.parse(localStorage.getItem('category')).firstName
-      : '';
-  // let item = JSON.parse(localStorage.getItem("category"));
+    typeof window !== "undefined" && localStorage.getItem("category")
+      ? JSON.parse(localStorage.getItem("category"))
+      : "";
+  // let item = JSON.parse(localStorage.getItem('category'));
+
+  //   let section = JSON.parse(localStorage.getItem('vehiclesSection'));
+  let section =
+    typeof window !== "undefined" && localStorage.getItem("vehiclesSection")
+      ? JSON.parse(localStorage.getItem("vehiclesSection"))
+      : "";
+  //   let user = localStorage.getItem('user');
+  let user =
+    typeof window !== "undefined" && localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
 
   const onSearch = async () => {
     let category;
     console.log(item);
 
-    if (item === 'small') {
+    if (item === "small") {
       category = 1;
-    } else if (item === 'medium') {
+    } else if (item === "medium") {
       category = 2;
     } else {
       category = 3;
     }
 
+    const validateLocation = (loc) => {
+      switch (loc) {
+        case "02000010":
+          return "Buenos Aires";
+          break;
+        case "14014010":
+          return "Córdoba";
+          break;
+        case "06441030":
+          return "La Plata";
+          break;
+        case "10077020":
+          return "Rosario";
+          break;
+        case "66028050":
+          return "Salta";
+          break;
+      }
+    };
+
     const selection = {
       startPlace: startPl,
-      start: startDate.toISOString().split('.')[0],
-      returnPlace: returnPl,
-      end: endDate.toISOString().split('.')[0],
+      start: startDate.toISOString().split(".")[0],
+      returnPlace: samePlace ? startPl : returnPl,
+      end: endDate.toISOString().split(".")[0],
       id: category,
+      location: validateLocation(startPl),
     };
 
     const postCar = await postCarsAvailable(selection);
-    localStorage.setItem('cars', JSON.stringify(postCar));
+    localStorage.setItem("cars", JSON.stringify(postCar));
+    localStorage.setItem("bookingDates", JSON.stringify(selection));
     // console.log(postCar);
-    console.log(selection);
+   
 
-    router.push(`/booking/${item}`);
+    if (!section) {
+      router.push(`/booking/${item}`);
+    } else if (section !== null && user === null) {
+      router.push(`/login`);
+    } else {
+      router.push(`/pay`);
+      //localStorage.removeItem('vehiclesSection');      
+    }
+    console.log("valor" , section);
+    
   };
 
   // eslint-disable-next-line react/display-name
@@ -85,7 +128,7 @@ export default function Booking() {
           <div className="flex flex-col md:flex-row md:gap-3 lg:justify-between lg:gap-6">
             <div className="w-full lg:w-[480px]">
               <select
-                defaultValue={'default'}
+                defaultValue={"default"}
                 className="w-full h-[36px] text-[16px] px-2 rounded-md border-gray-400 shadow-md md:h-[46px] md:text-[20px] md:max-w-sm lg:max-w-lg"
                 onChange={(e) => setStartPl(e.target.value)}
               >
@@ -129,7 +172,14 @@ export default function Booking() {
           </div>
 
           <div className="flex gap-4 pl-4 mt-4 mb-5">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={(e) =>
+                e.currentTarget.checked
+                  ? setSamePlace(true)
+                  : setSamePlace(false)
+              }
+            />
             <p className="text-[16px] md:text-[20px] ">
               Retiro y devuelvo en el mismo lugar
             </p>
@@ -140,9 +190,12 @@ export default function Booking() {
           <div className="flex flex-col md:flex-row md:gap-3 lg:justify-between lg:gap-6">
             <div className="w-full lg:w-[480px]">
               <select
-                defaultValue={'default'}
-                className="w-full h-[36px] text-[16px] px-2 rounded-md border-gray-400 shadow-md md:h-[46px] md:text-[20px] md:max-w-sm lg:max-w-lg"
+                defaultValue={"default"}
+                className={`w-full h-[36px] text-[16px] px-2 rounded-md border-gray-400 shadow-md md:h-[46px] md:text-[20px] md:max-w-sm lg:max-w-lg ${
+                  samePlace && "opacity-[40%] bg-[#bebebe] text-[#bebebe]"
+                }`}
                 onChange={(e) => setReturnPl(e.target.value)}
+                disabled={samePlace ? true : false}
               >
                 <option value="02000010">Buenos Aires</option>
                 <option value="14014010">Córdoba</option>
