@@ -14,8 +14,6 @@ import {
 import { SubmitButton } from './SubmitButton';
 import { ErrorMessage } from './ErrorMessage';
 import createBooking from '@/lib/createBooking';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '@/features/users/userSlice';
 
 type FormValues = {
   name: string;
@@ -25,6 +23,26 @@ type FormValues = {
 };
 
 type Props = {};
+
+const CARD_OPTIONS = {
+  iconStyle: 'solid',
+  style: {
+    base: {
+      fontSize: '18px',
+      fontSmoothing: 'antialiased',
+      ':-webkit-autofill': {
+        color: '#fce883',
+      },
+      '::placeholder': {
+        color: '#A3A3A3',
+      },
+    },
+    invalid: {
+      iconColor: '#FF170A',
+      color: '#FF170A',
+    },
+  },
+};
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -42,15 +60,14 @@ const ELEMENT_OPTIONS = {
   },
 };
 
-// export const FormStripe = ({ timer }) => {
-export const FormStripe = () => {
+export const FormStripe = ({ timer }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [error, setError] = useState(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const currentUser = useSelector(selectCurrentUser);
+  // const [paymentMethod, setPaymentMethod] = useState(null);
 
   const {
     register,
@@ -88,7 +105,7 @@ export const FormStripe = () => {
     const payload = await stripe.createPaymentMethod({
       type: 'card',
       card,
-      billing_details: { email: currentUser.email, name: currentUser.fullName },
+      billing_details: { email: 'maria@correo.com', name: 'Maria Movear' },
     });
 
     setProcessing(false);
@@ -96,13 +113,18 @@ export const FormStripe = () => {
     if (payload.error) {
       setError(payload.error);
     } else {
+      console.log(
+        'resultado de payload',
+        payload.paymentMethod.id,
+        payload.paymentMethod.billing_details
+      );
       //------ Llamada al backend stripe server
       const { id } = payload.paymentMethod;
       const dataPurchase = {
         id,
-        email: currentUser.email,
-        name: currentUser.fullName,
-        amount: 1500,
+        email: 'maria@correo.com',
+        name: 'Maria Movear',
+        amount: 9500,
         description: 'Reserva de Vehículo',
       };
       const response = await fetch(
@@ -122,11 +144,12 @@ export const FormStripe = () => {
         setError({ message: 'Tarjeta Rechazada' });
         console.log(result.message.code);
       } else {
+        // setPaymentMethod(payload.paymentMethod);
         const { token } = JSON.parse(localStorage.getItem('token'));
         const { id: idcar } = JSON.parse(localStorage.getItem('carSelected'));
         const { id } = JSON.parse(localStorage.getItem('user'));
         const creatBooking = await createBooking(token, idcar, id);
-        // timer();
+        timer();
       }
     }
   };
@@ -166,7 +189,7 @@ export const FormStripe = () => {
                   ? 'outline-2 outline-red-500 border-2 border-red-500'
                   : ''
               } `}
-              options={ELEMENT_OPTIONS}
+              options={CARD_OPTIONS}
               onChange={(e) => {
                 setError(e.error);
                 setCardComplete(e.complete);
