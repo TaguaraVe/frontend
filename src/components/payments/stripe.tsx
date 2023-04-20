@@ -42,7 +42,8 @@ const ELEMENT_OPTIONS = {
   },
 };
 
-export const FormStripe = ({ timer }) => {
+// export const FormStripe = ({ timer }) => {
+export const FormStripe = () => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -87,7 +88,7 @@ export const FormStripe = ({ timer }) => {
     const payload = await stripe.createPaymentMethod({
       type: 'card',
       card,
-      billing_details: { email: 'maria@correo.com', name: 'Maria Movear' },
+      billing_details: { email: currentUser.email, name: currentUser.fullName },
     });
 
     setProcessing(false);
@@ -121,12 +122,11 @@ export const FormStripe = ({ timer }) => {
         setError({ message: 'Tarjeta Rechazada' });
         console.log(result.message.code);
       } else {
-        // setPaymentMethod(payload.paymentMethod);
         const { token } = JSON.parse(localStorage.getItem('token'));
         const { id: idcar } = JSON.parse(localStorage.getItem('carSelected'));
         const { id } = JSON.parse(localStorage.getItem('user'));
         const creatBooking = await createBooking(token, idcar, id);
-        timer();
+        // timer();
       }
     }
   };
