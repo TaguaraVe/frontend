@@ -25,19 +25,18 @@ const UpdateReservation = () => {
       ? JSON.parse(localStorage.getItem('category'))
       : '';
 
-  console.log(bookinDat);
-
-  // esto lo estoy cambiando temporalmene para poder pasar a producción
-  // const [startDate, setStartDate] = useState(new Date(bookinDat.startDat));
-  // const [endDate, setEndDate] = useState(new Date(bookinDat.endDat));
-  // const [startTime, setStartTime] = useState(new Date(bookinDat.startDat));
-  // const [endTime, setEndTime] = useState(new Date(bookinDat.endDat));
-
-  //  esta es la modificación que hice para poder pasar a producción
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [startDate, setStartDate] = useState(
+    new Date(Date.parse(bookinDat.start || '2023-04-10'))
+  );
+  const [endDate, setEndDate] = useState(
+    new Date(Date.parse(bookinDat.end || '2023-04-10'))
+  );
+  const [startTime, setStartTime] = useState(
+    new Date(Date.parse(bookinDat.start || '2023-04-10'))
+  );
+  const [endTime, setEndTime] = useState(
+    new Date(Date.parse(bookinDat.end || '2023-04-10'))
+  );
 
   const [startPl, setStartPl] = useState(bookinDat.startPlace);
   const [returnPl, setReturnPl] = useState(bookinDat.returnPlace);
@@ -47,14 +46,6 @@ const UpdateReservation = () => {
   const router = useRouter();
 
   registerLocale('es', es);
-
-  // let item =
-  //   typeof window !== 'undefined' && localStorage.getItem('category')
-  //     ? JSON.parse(localStorage.getItem('category')).firstName
-  //     : '';
-  // let item = JSON.parse(localStorage.getItem('category'));
-  // let section = JSON.parse(localStorage.getItem('vehiclesSection'));
-  // let user = localStorage.getItem('user');
 
   const onSearch = async () => {
     let category;
@@ -92,26 +83,24 @@ const UpdateReservation = () => {
 
     const selection = {
       startPlace: startPl,
-      start: startDate.toISOString().split('.')[0],
       returnPlace: returnPl,
-      end: endDate.toISOString().split('.')[0],
       id: category,
+      driver: driver,
+      pawn,
       location: validateLocation(startPl),
+      start:
+        startDate.toISOString().split('T')[0].toString() +
+        'T' +
+        startTime.toTimeString().split(' ')[0],
+      end:
+        endDate.toISOString().split('T')[0].toString() +
+        'T' +
+        endTime.toTimeString().split(' ')[0],
     };
 
     const postCar = await postCarsAvailable(selection);
     localStorage.setItem('cars', JSON.stringify(postCar));
     localStorage.setItem('bookingDates', JSON.stringify(selection));
-    // console.log(postCar);
-
-    // if (section === null) {
-    //   router.push(`/booking/${item}`);
-    // } else if (section !== null && user === null) {
-    //   router.push(`/login`);
-    // } else {
-    //   router.push(`/pay`);
-    //   //localStorage.removeItem('vehiclesSection');
-    // }
     router.push(`/confirmed`);
   };
 
